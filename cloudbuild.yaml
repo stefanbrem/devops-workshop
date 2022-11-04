@@ -24,7 +24,7 @@ steps:
     entrypoint: kustomize
     args:
       - build
-      - kustomize/overlays/$_KUSTOMIZE_ENV
+      - $_KUSTOMIZE_ENV
       - -o
       - /workspace/kustomize-output.yaml
     env:
