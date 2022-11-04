@@ -24,7 +24,7 @@ steps:
     entrypoint: kustomize
     args:
       - build
-      - $_KUSTOMIZE_ENV
+      - kustomize/overlays/$_KUSTOMIZE_ENV
       - -o
       - /workspace/kustomize-output.yaml
     env:
@@ -33,7 +33,7 @@ steps:
 
   - id: Apply deploy
     name: gcr.io/cloud-builders/gke-deploy
-    args: ["apply", "--filename=kustomize-output.yaml",  "--cluster=stefan-cluster", "--location=asia-southeast1", "--namespace=stefan"]
+    args: ["apply", "--filename=kustomize-output.yaml"] # "--cluster=stefan-cluster", "--location=asia-southeast1", "--namespace=stefan"
     env:
       - CLOUDSDK_COMPUTE_ZONE=$_GKE_LOCATION
       - CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER
