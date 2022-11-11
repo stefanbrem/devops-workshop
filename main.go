@@ -48,7 +48,7 @@ func main() {
 
 	http.HandleFunc("/", helloworld)
 	http.HandleFunc("/health_check", check)
-	http.HandleFunc("/env", check)
+	http.HandleFunc("/env", env)
 
 	http.ListenAndServe(":3000", nil)
 }
