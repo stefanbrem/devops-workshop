@@ -73,5 +73,6 @@ func check(w http.ResponseWriter, r *http.Request) {
 }
 
 func env(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
 	w.Write([]byte(strings.Join(os.Environ(), "\n")))
 }
