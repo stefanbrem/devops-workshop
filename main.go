@@ -48,7 +48,6 @@ func main() {
 
 	http.HandleFunc("/", helloworld)
 	http.HandleFunc("/health_check", check)
-	http.HandleFunc("/env", env)
 
 	http.ListenAndServe(":3000", nil)
 }
@@ -57,22 +56,20 @@ func main() {
 func helloworld(w http.ResponseWriter, r *http.Request) {
 	firstname := os.Getenv("FIRSTNAME")
 	lastname := os.Getenv("LASTNAME")
+	env := strings.Join(os.Environ(), "\n")
 	status := http.StatusOK
 	w.WriteHeader(status)
 	w.Write([]byte(fmt.Sprintf(`
 	<!DOCTYPE html>
 	<html lang="en">
 		<head><title>Hello %s %s</title></head>
-		<body><h1>Hello %s %s!</h1></body>
+		<body><h1>Hello %s %s!</h1>
+		<p>%s</p>
+	</body>
 	</html>
-	`, firstname, lastname, firstname, lastname)))
+	`, firstname, lastname, firstname, lastname, env)))
 }
 
 func check(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`<h1>Health check</h1>`))
-}
-
-func env(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
-	w.Write([]byte(strings.Join(os.Environ(), "\n")))
 }
